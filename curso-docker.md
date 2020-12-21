@@ -13,6 +13,7 @@
   - [Virtualización](#virtualización)
     - [Virtual Machines](#virtual-machines)
     - [Containers](#containers)
+  - [Instalando Docker](#instalando-docker)
 - [Contenedores](#contenedores)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
@@ -108,6 +109,19 @@ Los beneficios de usar contenedores incluyen:
 ![container](https://imgur.com/dE0JqFn.png)
 
 ![comparacion-container-vs-vms](https://imgur.com/B5YAzTl.png)
+
+## Instalando Docker
+
+En la documentación oficial esta paso a paso como instalarlo.
+
+[Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/#uninstall-docker-engine)
+
+Dos comando despues de instalar docker son:
+
+```shell
+$ docker --version
+$ docker info
+```
 
 # Contenedores
 
