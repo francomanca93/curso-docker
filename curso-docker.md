@@ -16,6 +16,7 @@
   - [Instalando Docker](#instalando-docker)
   - [Qué es y cómo funciona Docker](#qué-es-y-cómo-funciona-docker)
 - [Contenedores](#contenedores)
+  - [Primeros pasos: hola mundo](#primeros-pasos-hola-mundo)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
@@ -142,6 +143,14 @@ Dentro de la arquitectura de Docker encontramos:
 4. **Redes**: Son las que permiten la comunicación entre contenedores.
 
 # Contenedores
+
+## Primeros pasos: hola mundo
+
+Comando de hola mundo, para levantar el primer contenedor en Docker.
+
+```shell
+$ docker run hello-world
+```
 
 # Datos en Docker
 
