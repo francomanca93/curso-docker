@@ -10,6 +10,9 @@
     - [1. Construir](#1-construir)
     - [2. Distribuir](#2-distribuir)
     - [3. Ejecutar](#3-ejecutar)
+  - [Virtualización](#virtualización)
+    - [Virtual Machines](#virtual-machines)
+    - [Containers](#containers)
 - [Contenedores](#contenedores)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
@@ -62,6 +65,49 @@ Problemática:
 - Recursos de hardware (Capacidad de ejecución - Menos memoria, procesador más debil)
 
 ![docker](https://imgur.com/jh2v63T.png)
+
+## Virtualización
+
+Una máquina virtual nos permite tener varios ordenadores virtuales ejecutándose sobre el mismo ordenador físico.
+
+En Informática, la virtualización es la creación a través de software de una versión virtual de algún recurso tecnológico, como puede ser una plataforma de hardware, un sistema operativo, un dispositivo de almacenamiento o cualquier otro recurso de red.
+
+> Virtualización nos permite atacar en simultáneo los tres problemas del desarrollo de software profesional.
+
+### Virtual Machines
+
+![vms](https://imgur.com/BI2A9Vc.png)
+
+Una máquina virtual es un software que es creado en una computadora llamada host. Esta es capaz de correr aplicaciones como una computadora separada, creando un sistema operativo, backups, etc. 
+
+Algumos problemas son:
+
+- **Peso**. En el orden de los GBs. Repiten archivos en común (Sistemas operativos). Inicio lento.
+- **Costo de administración**. Necesita mantenimiento igual que cualquier otra computadora.
+- **Múltiples de formatos**: VDI, VMDK, VHD, raw, etc.
+
+![vms](https://imgur.com/hCtritR.png)
+
+### Containers
+
+Un contenedor la unidad logica mas importande de docker que permite encapsular las dependencias de un proyecto en un entorno aislado, con esto puedes conseguir resolver el problema de “But it works in my machine” ya que te permite crear una especie de maquina virtual y pasársela a tus compañeros o colocarlo en un servidor para el despliegue de manera fácil.
+
+Los beneficios de usar contenedores incluyen:
+
+- **Ágil creación y despliegue de aplicaciones**: Mayor facilidad y eficiencia al crear imágenes de contenedor en vez de máquinas virtuales.
+- **Desarrollo, integración y despliegue continuo**: Permite que la imagen de contenedor se construya y despliegue de forma frecuente y confiable, facilitando los rollbacks pues la imagen es inmutable.
+- **Separación de tareas entre Dev y Ops**: Puedes crear imágenes de contenedor al momento de compilar y no al desplegar, desacoplando la aplicación de la infraestructura.
+- **Observabilidad**: No solamente se presenta la información y métricas del sistema operativo, sino la salud de la aplicación y otras señales.
+- **Consistencia entre los entornos de desarrollo, pruebas y producción**: La aplicación funciona igual en un laptop y en la nube.
+- **Portabilidad entre nubes y distribuciones**: Funciona en Ubuntu, RHEL, CoreOS, tu datacenter físico, Google Kubernetes Engine y todo lo demás.
+- **Administración centrada en la aplicación**: Eleva el nivel de abstracción del sistema operativo y el hardware virtualizado a la aplicación que funciona en un sistema con recursos lógicos.
+- **Microservicios distribuidos, elásticos, liberados y débilmente acoplados**: Las aplicaciones se separan en piezas pequeñas e independientes que pueden ser desplegadas y administradas de forma dinámica, y no como una aplicación monolítica que opera en una sola máquina de gran capacidad
+- **Aislamiento de recursos**: Hace el rendimiento de la aplicación más predecible.
+- **Utilización de recursos**: Permite mayor eficiencia y densidad.
+
+![container](https://imgur.com/dE0JqFn.png)
+
+![comparacion-container-vs-vms](https://imgur.com/B5YAzTl.png)
 
 # Contenedores
 
