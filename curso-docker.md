@@ -18,6 +18,7 @@
 - [Contenedores](#contenedores)
   - [Primeros pasos: hola mundo](#primeros-pasos-hola-mundo)
   - [Conceptos fundamentales de Docker: contenedores](#conceptos-fundamentales-de-docker-contenedores)
+  - [Comandos básicos | Comprendiendo el estado de Docker](#comandos-básicos--comprendiendo-el-estado-de-docker)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
@@ -169,6 +170,35 @@ $ docker run hello-world
 - Cada contenedor tiene un ID único, también tiene un nombre.
 
 ![containers](https://imgur.com/fiNNMK4.png)
+
+## Comandos básicos | Comprendiendo el estado de Docker
+
+- Corro el contenedor hello-world
+`$ docker run hello-world`
+
+- Muestra los contenedores **activos**
+`$ docker ps`
+
+- Muestra **todos** los contenedores
+`$ docker ps -a`
+
+- Muestra el **detalle completo** de un contenedor
+`$ docker inspect <containe ID>`
+
+- Igual que el anterior, **detalle completo** de un contenedor **con el nombre**
+`$ docker inspect <name>`
+
+- Le asigno un **nombre custom**, “hello-platzi”
+`$ docker run –-name hello-platzi hello-world`
+
+- Cambio el nombre de hello-platzi a hola-platzi
+`$ docker rename hello-platzi hola-platzy`
+
+- **Borro un contenedor**
+`$ docker rm <ID o nombre>`
+
+- **Borro todos lo contenedores** que esten **parados**
+`$ docker container prune`
 
 # Datos en Docker
 
