@@ -23,6 +23,7 @@
   - [Ciclo de vida de un contenedor](#ciclo-de-vida-de-un-contenedor)
     - [Resumen comandos](#resumen-comandos)
     - [Explicación detallada](#explicación-detallada)
+  - [Exponiendo contenedores](#exponiendo-contenedores)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
@@ -273,6 +274,37 @@ Se puede matar un Main process desde afuera del contenedor, esto se logra conoci
 Para matar el proceso principal del contenedor desde afuera se ejecuta el siguiente comando (solo funciona en linux)
 
 Kill  2474
+
+## Exponiendo contenedores
+
+- Corro un servidor [nginx](https://es.wikipedia.org/wiki/Nginx)
+`$ docker run -d --name proxy nginx`
+
+- Apago el contenedor
+`$ docker stop proxy`
+
+- Borro el contenedor
+`$ docker rm proxy`
+
+- Paro el contenedor y lo borro
+`$ docker rm -f <contenedor>`
+
+- Corro un servidor nginx y expongo el puerto 80 del contenedor en el puerto 8080 de mi máquina (`<puerto_maquina>:<puerto_contenedor>`)
+`$ docker run -d --name proxy -p 8080:80 nginx`
+
+- Desde mi navegador compruebo que funcione
+`localhost:8080 ó 0.0.0.0:8080 ó 172.17.0.1:8080`
+
+- Veo los logs
+`$ docker logs proxy`
+
+- Hago un follow del log
+`$ docker logs -f proxy`
+
+- Veo y sigo solo las 10 últimas entradas del log
+`$ docker logs --tail 10 -f proxy`
+
+![exponcision_de_container](https://imgur.com/teLKAvA.png)
 
 # Datos en Docker
 
