@@ -19,6 +19,7 @@
   - [Primeros pasos: hola mundo](#primeros-pasos-hola-mundo)
   - [Conceptos fundamentales de Docker: contenedores](#conceptos-fundamentales-de-docker-contenedores)
   - [Comandos básicos | Comprendiendo el estado de Docker](#comandos-básicos--comprendiendo-el-estado-de-docker)
+  - [Container con un OS: Ubuntu | El modo interactivo](#container-con-un-os-ubuntu--el-modo-interactivo)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
@@ -199,6 +200,23 @@ $ docker run hello-world
 
 - **Borro todos lo contenedores** que esten **parados**
 `$ docker container prune`
+
+## Container con un OS: Ubuntu | El modo interactivo
+
+
+- Corre un ubuntu pero lo deja apagado.
+`$ docker run ubuntu`
+
+- Lista todos los contenedores.
+`$ docker ps -a`
+
+- Crea un ubuntu, lo corre y entro al shell.
+`$ docker run -it ubuntu`
+  - `-i`: interactivo
+  - `-t`: abre la consola
+
+- Veo la versión de Linux.
+`cat /etc/lsb-release`
 
 # Datos en Docker
 
