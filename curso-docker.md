@@ -20,6 +20,9 @@
   - [Conceptos fundamentales de Docker: contenedores](#conceptos-fundamentales-de-docker-contenedores)
   - [Comandos básicos | Comprendiendo el estado de Docker](#comandos-básicos--comprendiendo-el-estado-de-docker)
   - [Container con un OS: Ubuntu | El modo interactivo](#container-con-un-os-ubuntu--el-modo-interactivo)
+  - [Ciclo de vida de un contenedor](#ciclo-de-vida-de-un-contenedor)
+    - [Resumen comandos](#resumen-comandos)
+    - [Explicación detallada](#explicación-detallada)
 - [Datos en Docker](#datos-en-docker)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
@@ -217,6 +220,59 @@ $ docker run hello-world
 
 - Veo la versión de Linux.
 `cat /etc/lsb-release`
+
+## Ciclo de vida de un contenedor
+
+### Resumen comandos
+
+- Veo todos los contenedores
+`$ docker ps -a`
+
+- Creo un contenedor y le paso el comando con el que se mentendrá vivo el mismo.
+`$ docker run --name <nombre> -d ubuntu -f <comando>`
+
+- Mantiene el contenedor activo
+`$ docker run --name alwaysup -d ubuntu tail -f /dev/null`
+
+- Entro al contenedor
+`$ docker exec -it alwaysup bash`
+
+- Veo el main process del ubuntu
+`$ docker inspect --format ‘{{.State.Pid}}’ alwaysup`
+
+- Desde Linux si ejecuto `kill -9 <PID>` mata el proceso dentro del contenedor de ubuntu pero desde MAC no funciona
+
+### Explicación detallada
+
+![ciclo_de_vida](https://imgur.com/a3KDfrr.png)
+
+Cuando tiene sentido que esté corriendo? Cuando se apaga y porque? como usar y preparar un contenedor y que se comporten como uno quiere.
+
+Cada vez que un contendor se ejecuta, en realidad lo que ejecuta es un proceso del sistema operativo. Este proceso se le conoce como **Main process**.
+
+**Main process**: Determina la vida del contenedor, un contendor corre siempre y cuando su proceso principal este corriendo.
+
+**Sub process**: Un contenedor puede tener o lanzar procesos alternos al main process, si estos fallan el contenedor va a seguir encedido a menos que falle el main.
+
+Ejemplos manejados en el video
+
+- Bash como Main process
+- [Agujero negro (/dev/null)](https://es.wikipedia.org/wiki//dev/null) como Main process.
+  - `docker run --name alwaysup -d ubuntu tail -f /dev/null`.
+  - El ouput que te regresará es el ID del contentedor.
+
+Te puedes conectar al contenedor y hacer cosas dentro del él con el siguiente comando (sub proceso)
+
+`docker exec -it alwaysup bash`
+
+Se puede matar un Main process desde afuera del contenedor, esto se logra conociendo el id del proceso principal del contenedor que se tiene en la maquina. Para saberlo se ejecuta los siguientes comandos:
+
+- `docker inspect --format '{{.State.Pid}}' alwaysup`
+- El output del comando es el process ID.
+
+Para matar el proceso principal del contenedor desde afuera se ejecuta el siguiente comando (solo funciona en linux)
+
+Kill  2474
 
 # Datos en Docker
 
