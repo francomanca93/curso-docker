@@ -25,6 +25,7 @@
     - [Explicación detallada](#explicación-detallada)
   - [Exponiendo contenedores](#exponiendo-contenedores)
 - [Datos en Docker](#datos-en-docker)
+  - [Bind mounts](#bind-mounts)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
@@ -307,6 +308,42 @@ Kill  2474
 ![exponcision_de_container](https://imgur.com/teLKAvA.png)
 
 # Datos en Docker
+
+![datas_in_docker](https://imgur.com/SlYxSpb.png)
+
+## Bind mounts
+
+![bind_mounts](https://imgur.com/E6QfMhB.png)
+
+- Creo un directorio en mi máquina
+`mkdir dockerdata`
+
+- Corro una imagen con una db mongo llamada db-mongo
+`$ docker run -d --name db-mongo mongo`
+
+- veo los contenedores activos
+`$ docker ps`
+
+- entro al bash del contenedor
+`$ docker exec -it db-mongo bash`
+
+- me conecto a la BBDD. Dentro de la BBDD ejecuto algunos comandos.
+`$ mongo`
+
+  - listo las BBDD
+    `shows dbs`
+
+  - creo la BBDD platzi
+    `use platzi`
+
+  - inserto un nuevo dato
+    `db.users.insert({“nombre”:franco”})`
+
+  - veo el dato que cargué
+    `db.users.find()`
+
+- Corro un contenedor de mongo y creo un bind mount
+`$ docker run -d --name db-mongo -v <path de mi maquina>:<path dentro del contenedor(/data/db mongo)>`
 
 # Imágenes
 
