@@ -26,6 +26,7 @@
   - [Exponiendo contenedores](#exponiendo-contenedores)
 - [Datos en Docker](#datos-en-docker)
   - [Bind mounts](#bind-mounts)
+  - [Volúmenes](#volúmenes)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
@@ -344,6 +345,44 @@ Kill  2474
 
 - Corro un contenedor de mongo y creo un bind mount
 `$ docker run -d --name db-mongo -v <path de mi maquina>:<path dentro del contenedor(/data/db mongo)>`
+
+## Volúmenes
+
+**Los volúmenes son una evolución de los bind mounts**. La parte del disco que afecta a los volumenes es manejada por docker y no tenemos acceso a menos que tengamos accesos privilegiados en el sistema, es practico para disponer de un lugar donde docker almacena datos y nadie mas los puede tocar excepto docker
+
+![volumens](https://imgur.com/Zr1GbZz.png)
+
+- listo los volumen
+`$ docker volume ls`
+
+- creo un volumen
+`$ docker volume create dbdata`
+
+- corro la BBDD y monto el volume
+`$ docker run -d --name db --mount src=dbdata,dst=/data/db mongo`
+
+> src=dbdata (que_queremos_montar),dst=(destino dentro del contenedor) /data/db mongo
+
+- veo la información detallada del contenedor
+`$ docker inspect db`
+
+- entro al bash del contenedor
+`$ docker exec -it db-mongo bash`
+
+- me conecto a la BBDD. Dentro de la BBDD ejecuto algunos comandos.
+`$ mongo`
+
+  - listo las BBDD
+    `shows dbs`
+
+  - creo la BBDD platzi
+    `use platzi`
+
+  - inserto un nuevo dato
+    `db.users.insert({“nombre”:franco”})`
+
+  - veo el dato que cargué
+    `db.users.find()`
 
 # Imágenes
 
