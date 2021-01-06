@@ -31,6 +31,7 @@
 - [Imágenes](#imágenes)
   - [Conceptos fundamentales de Docker: imágenes](#conceptos-fundamentales-de-docker-imágenes)
   - [Construyendo una imagen propia](#construyendo-una-imagen-propia)
+  - [El sistema de capas](#el-sistema-de-capas)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
 - [Docker Avanzado](#docker-avanzado)
@@ -471,6 +472,64 @@ RUN touch /ust/src/hola-platzi.txt        # este comando se ejecutará en tiempo
 `$ docker push miusuario/ubuntu:platzi`
 
 ![imagen_propia](https://imgur.com/LhOxvUE.png)
+
+## El sistema de capas
+
+La importancia de entender el sistema de capas consiste en la optimización de la construcción del contenedor para reducir espacio ya que cada comando en el dockerfile crea una capa extra de código en la imagen.
+
+Lo mas simple es lo siguiente:
+
+![docker_layer1](https://imgur.com/6iuv1UI.png)
+
+Si desglosamos que tiene cada capa de una imagen creada por un dockerfile, nos encontramos con lo siguiente:
+
+![docker_layer2](https://imgur.com/LZusbe1.png)
+
+- Para saber que tiene una imagen usamos
+
+`docker history ubuntu:platzi`
+su salida es:
+
+```terminal
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+f5bd50a5d896   57 minutes ago   /bin/sh -c touch /usr/src/hola-franco.txt       0B        
+f643c72bc252   5 weeks ago      /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B        
+<missing>      5 weeks ago      /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B        
+<missing>      5 weeks ago      /bin/sh -c [ -z "$(apt-get indextargets)" ]     0B        
+<missing>      5 weeks ago      /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   811B      
+<missing>      5 weeks ago      /bin/sh -c #(nop) ADD file:4f15c4475fbafb3fe…   72.9MB  
+```
+
+Las capas como se ven, van de abajo para arriba y los comandos utilizados a correr la imagen son los que se encuetran en [su dockerfile que lo podemos ver en su repositorio publico](https://github.com/tianon/docker-brew-ubuntu-core/blob/74249faf47098bef2cedad89696bfd1ed521e019/focal/Dockerfile), para este caso.
+
+![capas](https://imgur.com/xbxAqST.png)
+
+- Podemos usar un software de consola llamado [dive](https://github.com/wagoodman/dive), el programa nos da la misma informacion que el comando history de docker, pero con mucha mas información, mas opciones, como por ejemplo ver el que se ha modificado entre capa y capa, que comando se han utilizado, etc.
+`$ dive ubuntu:platzi`
+
+[Docker commit](https://docs.docker.com/engine/reference/commandline/commit/) tiene un funcionamiento muy parecido al commit de git.
+
+Guarda el estado de la capa mutable en un tag de la imagen a partir de la cual se genero el contenedor creando una capa mas para crear uno o mas contenedores a partir de esta nueva imagen.
+
+Ejemplo:
+
+![docker_commit](https://imgur.com/92eqft0.png)
+
+> Una imagen es inmutable, no se puede escribir, pero un contenedor SI. Entonces lo que haces es crear un contenedor a partir de una imagen, hacer los cambios correspondientes y hacer un commit sobre la imagen.
+
+Otro ejemplo para agregar capas
+
+Con docker commit se crea una nueva imagen con una capa adicional que modifica la capa base. Sabiendo lo anterior creamos una nueva imagen a partir de la imagen de Ubuntu.
+
+- `$ docker pull ubuntu`
+
+- `$ docker images`
+
+- `$ docker run -it cf0f3ca922e0 bin/bash`
+
+- (modificar el contenedor: Ej `apt-get install nmap`)
+
+- `$ docker commit deddd39fa163 ubuntu-nmap`
 
 # Docker como herramienta de desarrollo
 
