@@ -30,6 +30,7 @@
   - [Insertar y extraer archivos de un contenedor](#insertar-y-extraer-archivos-de-un-contenedor)
 - [Imágenes](#imágenes)
   - [Conceptos fundamentales de Docker: imágenes](#conceptos-fundamentales-de-docker-imágenes)
+  - [Construyendo una imagen propia](#construyendo-una-imagen-propia)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
 - [Docker Avanzado](#docker-avanzado)
@@ -433,6 +434,43 @@ Comandos:
 
 - descarga una versión específica de la imagen de Docker Hub.
 `docker pull [imageName]:[versionImage]`
+
+## Construyendo una imagen propia
+
+Práctica
+
+- Se crea un directorio:
+`mkdir images`
+
+- se accede al directorio:
+`cd imagenes`
+
+- se crea un archivo llamado Dockerfile
+`touch Dockerfile`
+
+- Contenido del Dockerfile:
+
+```Dockerfile
+FROM ubuntu:latest 
+RUN touch /ust/src/hola-platzi.txt        # este comando se ejecutará en tiempo de build
+```
+
+- Se crea una imágen, se le pasa el contexto de build
+`$ docker build -t ubuntu:platzi`
+
+- Iniciamos una conexión por terminal al contenedor de ubuntu
+`$ docker run -it ubuntu:platzi`
+
+- Para loguearse en docker hub, se ejecuta lo siguiente y se ponen las claves correspondientes
+`$ docker login`
+
+- Para poder publicar nuestro contenedor, es necesario cambiar el tag ubuntu, dado que el mismo ya existe como un contenedor oficial y no tenemos permisos para modificarlo.
+`$ docker tag ubuntu:platzi miusuario/ubuntu:platzy`
+
+- Una vez hecho el cambio ya podremos subirlo a una cuenta de docker hub, comando para hacer la publicación de nuestra imágen en docker hub
+`$ docker push miusuario/ubuntu:platzi`
+
+![imagen_propia](https://imgur.com/LhOxvUE.png)
 
 # Docker como herramienta de desarrollo
 
