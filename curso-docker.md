@@ -27,6 +27,7 @@
 - [Datos en Docker](#datos-en-docker)
   - [Bind mounts](#bind-mounts)
   - [Volúmenes](#volúmenes)
+  - [Insertar y extraer archivos de un contenedor](#insertar-y-extraer-archivos-de-un-contenedor)
 - [Imágenes](#imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
@@ -383,6 +384,28 @@ Kill  2474
 
   - veo el dato que cargué
     `db.users.find()`
+
+## Insertar y extraer archivos de un contenedor
+
+- creo un archivo en mi máquina
+`$ touch prueba.txt`
+
+- corron un ubuntu y le agrego el tail para que quede activo
+`$ docker run -d --name copytest ubuntu tail -f /dev/null`
+
+- entro al contenedor
+`$ docker exec -it copytest bash`
+
+- creo un directorio en el contenedor
+`$ mkdir testing`
+
+- copio el archivo dentro del contenedor
+`$ docker cp prueba.txt copytest:/testing/test.txt`
+
+- copio el directorio de un contenedor a mi máquina
+`$ docker cp copytest:/testing localtesting`
+
+> con “docker cp” no hace falta que el contenedor esté corriendo
 
 # Imágenes
 
