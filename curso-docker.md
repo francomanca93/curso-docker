@@ -29,6 +29,7 @@
   - [Volúmenes](#volúmenes)
   - [Insertar y extraer archivos de un contenedor](#insertar-y-extraer-archivos-de-un-contenedor)
 - [Imágenes](#imágenes)
+  - [Conceptos fundamentales de Docker: imágenes](#conceptos-fundamentales-de-docker-imágenes)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
 - [Docker compose](#docker-compose)
 - [Docker Avanzado](#docker-avanzado)
@@ -408,6 +409,30 @@ Kill  2474
 > con “docker cp” no hace falta que el contenedor esté corriendo
 
 # Imágenes
+
+## Conceptos fundamentales de Docker: imágenes
+
+Las imagenes tratan de resolver los problemas de **construcción** y **distribución**.
+
+Las imagenes Docker **son plantillas** (que incluyen una aplicación, los binarios y las librerias necesarias) que se utilizan para construir contenedores Docker y ejecutarlos (los contenedores ejecutarán una imagen previamente compilada).
+
+La comparativa con POO es que un objeto es un contenedor y la clase es la imagen.
+
+![image](https://imgur.com/fiNNMK4.png)
+
+Tenes a [Docker Hub](https://hub.docker.com/), el cual es un repositorio de imágenes. Si queremos una imagen específica con una base de datos, con ciertas aplicacions preesinstaladas las buscamos y la traemos.
+
+Comandos:
+
+- veo las imágenes que tengo localmente
+`$ docker image ls`
+- bajo la imagen de ubuntu con una versión específica
+`$ docker pull ubuntu:20.04`
+
+![image_pull](https://imgur.com/DVLW5ax.png)
+
+- descarga una versión específica de la imagen de Docker Hub.
+`docker pull [imageName]:[versionImage]`
 
 # Docker como herramienta de desarrollo
 
