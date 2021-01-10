@@ -33,7 +33,8 @@
   - [Construyendo una imagen propia](#construyendo-una-imagen-propia)
   - [El sistema de capas](#el-sistema-de-capas)
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
-  - [Usando Docker para desarrollar aplicaciones](#usando-docker-para-desarrollar-aplicaciones)
+  - [Utilizando docker para desarrollar aplicaciones](#utilizando-docker-para-desarrollar-aplicaciones)
+  - [Aprovechando el caché de capas para estructurar correctamente tus imágenes](#aprovechando-el-caché-de-capas-para-estructurar-correctamente-tus-imágenes)
 - [Docker compose](#docker-compose)
 - [Docker Avanzado](#docker-avanzado)
 
@@ -534,7 +535,7 @@ Con docker commit se crea una nueva imagen con una capa adicional que modifica l
 
 # Docker como herramienta de desarrollo
 
-## Usando Docker para desarrollar aplicaciones
+##  Utilizando docker para desarrollar aplicaciones
 
 > La finalidad de la siguiente sección es:
 > - Descargar el proyecto.
@@ -578,6 +579,41 @@ EXPOSE 3000
 # ejecuta el comando node index.js en el contenedor ya creado
 CMD ["node", "index.js"]
 ```
+
+## Aprovechando el caché de capas para estructurar correctamente tus imágenes
+
+Docker considera cada uno de los layer cada que vez que queremos contruir uno nuevo, esto se llama **layer chache**. Si queremos construir un layer que ya existe en el sistema, docker se da cuenta y no la construye, ahorrandonos el tiempo.
+
+Siempre que nuestra aplicaion tenga dependencias independientemente de la tecnologia (node: npm, python: pip, php:composer) podemos separar en dos capas la intalacion de las dependencias del codigo de la aplicaion.
+
+> La clave está en estructurar nuestro Dockerfile de manera de que primero se copien todas las dependencias y posteriormente nuestro código fuente, que es el mas suceptible a cambios.
+
+- Modificamos y adaptamos nuestro Dockerfile. Ejemplo del caso anterior:
+
+```Dockerfile
+
+FROM node:14
+
+COPY ["package.json", "package-lock.json", "/usr/src/"]
+
+WORKDIR /usr/src
+
+RUN npm install
+
+COPY [".", "/usr/src/"]
+
+EXPOSE 3000
+
+CMD ["npx", "nodemon", "index.js"]
+
+```
+
+- Creo la imagen local
+`$ docker build platziapp .`
+- Corro un contenedor y monto el archivo, en este caso un `index.js`, como ejemplo, para que se actualice dinámicamente con `nodemon` que está declarado en mi Dockerfile.
+`$ docker run --rm -p 3000:3000 -v pathlocal/index.js:pathcontenedor/index.js platziapp`
+ó
+`$ docker run --rm -p 3000:3000 -v $(pwd)/index.js:/usr/src/index.js platziapp`
 
 # Docker compose
 
