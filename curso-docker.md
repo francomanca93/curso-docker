@@ -37,6 +37,8 @@
   - [Aprovechando el caché de capas para estructurar correctamente tus imágenes](#aprovechando-el-caché-de-capas-para-estructurar-correctamente-tus-imágenes)
   - [Docker networking: colaboración entre contenedores](#docker-networking-colaboración-entre-contenedores)
 - [Docker compose](#docker-compose)
+  - [Docker Compose: la herramienta todo en uno](#docker-compose-la-herramienta-todo-en-uno)
+    - [Comandos básicos](#comandos-básicos)
 - [Docker Avanzado](#docker-avanzado)
 
 # Introducción
@@ -646,5 +648,56 @@ Comandos:
 `$ docker network connect plazinet db `
 
 # Docker compose
+
+## Docker Compose: la herramienta todo en uno
+
+![docker_compose](https://imgur.com/v9JYg7C.png)
+
+Docker Compose es una herramienta que permite simplificar el uso de Docker. A partir de archivos YAML es mas sencillo crear contendores, conectarlos, habilitar puertos, volumenes, etc.
+
+Con Compose puedes crear diferentes contenedores y al mismo tiempo, en cada contenedor, diferentes servicios, unirlos a un volúmen común, iniciarlos y apagarlos, etc. Es un componente fundamental para poder construir aplicaciones y microservicios.
+
+Docker Compose te permite mediante archivos YAML, poder instruir al Docker Engine a realizar tareas, programáticamente. Y esta es la clave, la facilidad para dar una serie de instrucciones, y luego repetirlas en diferentes ambientes.
+
+> Docker compose es una herramienta que nos permite describir de forma declarativa la arquitectura de nuestra aplicación, utiliza compose file (docker-compose.yml).
+
+Ejemplo de un archivo YAML:
+
+```yaml
+# Versión del compose file
+version: "3.8"
+
+# Servicios que componen nuestra aplicación.
+## Un servicio puede estar compuesto por uno o más contenedores.
+services:
+# nombre del servicio.
+  app:
+  # Imagen a utilizar.
+    image: platziapp
+	# Declaración de variables de entorno.
+    environment:
+      MONGO_URL: "mongodb://db:27017/test"
+	# Indica que este servicio depende de otro, en este caso DB.
+	# El servicio app solo iniciara si el servicio debe inicia correctamente.
+    depends_on:
+      - db
+	# Puerto del contenedor expuesto.
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mongo
+```
+
+### Comandos básicos
+
+- Levantar los servicios.
+`$ docker-compose up`
+
+- Bajar los servicios.
+`$ docker-compose down`
+
+- Crea todo lo declarado en el archivo `docker-compose.yml`. Levanta los servicios en **dettach**.
+`$ docker-compose up -d`
 
 # Docker Avanzado
