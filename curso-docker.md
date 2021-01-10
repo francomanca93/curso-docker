@@ -39,6 +39,7 @@
 - [Docker compose](#docker-compose)
   - [Docker Compose: la herramienta todo en uno](#docker-compose-la-herramienta-todo-en-uno)
     - [Comandos básicos](#comandos-básicos)
+  - [Subcomandos de Docker Compose](#subcomandos-de-docker-compose)
 - [Docker Avanzado](#docker-avanzado)
 
 # Introducción
@@ -699,5 +700,39 @@ services:
 
 - Crea todo lo declarado en el archivo `docker-compose.yml`. Levanta los servicios en **dettach**.
 `$ docker-compose up -d`
+
+## Subcomandos de Docker Compose
+
+> Los comandos docker-compose solo funcionan si se ejecutan dentro de la carpeta que contiene la definicion docker-compose.yml, si tratas de ejecutarlo desde afuera no lo reconoce.
+
+- listo las redes
+`$ docker network ls`
+
+- veo la definición de la red
+`$ docker network inspect docker_default`
+
+- veo todos los logs
+`$ docker-compose logs`
+
+- Muestra logs logs del contenedor indicado asociado al servicio `<service name>`.
+`$ docker-compose logs <service name>`
+
+  - solo veo el log de “app”
+    `$ docker-compose logs app`
+    - hago un follow del log de app
+    `$ docker-compose logs -f app`
+
+- Permite ejecutar el proceso `<command>` en el contenedor asociado al `<service name >` indicado.
+`$ docker-compose exec <service name> <command>`
+
+  - entro al shell del contenedor app
+    `$ docker-compose exec app bash`
+
+- veo los contenedores generados por docker compose
+`$ docker-compose ps`
+
+- borro todo lo generado por docker compose
+`$ docker-compose down`
+
 
 # Docker Avanzado
