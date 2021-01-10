@@ -35,6 +35,7 @@
 - [Docker como herramienta de desarrollo](#docker-como-herramienta-de-desarrollo)
   - [Utilizando docker para desarrollar aplicaciones](#utilizando-docker-para-desarrollar-aplicaciones)
   - [Aprovechando el caché de capas para estructurar correctamente tus imágenes](#aprovechando-el-caché-de-capas-para-estructurar-correctamente-tus-imágenes)
+  - [Docker networking: colaboración entre contenedores](#docker-networking-colaboración-entre-contenedores)
 - [Docker compose](#docker-compose)
 - [Docker Avanzado](#docker-avanzado)
 
@@ -614,6 +615,35 @@ CMD ["npx", "nodemon", "index.js"]
 `$ docker run --rm -p 3000:3000 -v pathlocal/index.js:pathcontenedor/index.js platziapp`
 ó
 `$ docker run --rm -p 3000:3000 -v $(pwd)/index.js:/usr/src/index.js platziapp`
+
+## Docker networking: colaboración entre contenedores
+
+Con Docker networking nuestra app puede hablar con una base de datos. Lo que se hace es correr la base de datos en otro contenedor y que ese contenedor se comunique con nuestra aplicación.
+
+Comandos:
+
+- Listar las redes
+`$ docker network ls`
+
+- Crear una red
+`$ docker network create --atachable <network_name>`
+`$ docker network create --atachable plazinet `
+
+- Inspeccionar una red. Veo toda la definición de la red creada
+`$ docker network inspect <network_name>`
+
+- Creo el contenedor de la BBDD
+`$ docker run -d --name db mongo`
+
+
+- Correr un contenedor usando variables de entorno
+`$ docker run --env MY_VAR='' <image_name>`
+  - Corro el contenedor “app” y le paso una variable
+`$ docker run -d -name app -p 3000:3000 --env MONGO_URL=mondodb://db:27017/test platzi`
+
+- Conectar un contenedor a la red
+`$ docker network connect  <network_name> <container_name> `
+`$ docker network connect plazinet db `
 
 # Docker compose
 
