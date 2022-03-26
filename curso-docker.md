@@ -151,7 +151,7 @@ $ docker info
 Componentes DENTRO del circulo de Docker:
 
 - **Docker daemon**: Es el centro de docker, el corazón que gracias a él, podemos comunicarnos con los servicios de docker.
-- **REST API**: Como cualquier otra API, es la que nos permite visualizar docker de forma “gráfica”.
+- **REST API**: Es la forma en que Docker se comunica consigo. Asi, podemos comunicarnos desde nuestra propia máquina con el Daemon por HTTP, o desde una máquina remota del mismo modo gracias a la API que expone
 - **Cliente de docker**: Gracias a este componente, podemos comunicarnos con el corazón de docker (Docker Daemon) que por defecto es la línea de comandos.
 
 Dentro de la arquitectura de Docker encontramos:
